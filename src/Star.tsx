@@ -1,5 +1,6 @@
 import React, { CSSProperties } from 'react';
 import StarIcon from './StarIcon';
+import { calculateTotalIcons } from './utils';
 
 const background = {
   borderRadius: '50%',
@@ -134,10 +135,6 @@ class Star extends React.PureComponent<Props, State> {
       style,
       tabIndex
     } = this.props;
-
-    function calculateTotalIcons(start: number, stop: number, step: number) {
-      return Math.floor((stop - start) / step);
-    }
 
     return (
       <StarIcon

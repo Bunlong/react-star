@@ -1,4 +1,5 @@
 import React, { CSSProperties } from 'react';
+import { renderIcon } from './utils';
 
 interface Props {
   index: number;
@@ -11,19 +12,6 @@ interface Props {
   onMouseMove?: (index: number, event: any) => void;
   onTouchEnd?: (index: number, event: any) => void;
   onTouchMove?: (index: number, event: any) => void;
-}
-
-const renderIcon = (icon: any) => {
-  if (React.isValidElement(icon)) {
-    return icon;
-  }
-  if (typeof icon === 'object' && icon !== null) {
-    return <span style={icon} />;
-  }
-  if (Object.prototype.toString.call(icon) === '[object String]') {
-    return <span className={icon} />;
-  }
-  return null;
 }
 
 class Icon extends React.PureComponent<Props> {

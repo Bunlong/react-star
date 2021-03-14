@@ -180,7 +180,7 @@ class StarIcon extends React.PureComponent<Props, State> {
     return (
       <span
         id={`${id}`}
-        style={{...style, display: 'inline-block', direction }}
+        style={{...style, display: 'inline-block', outline: 'none', direction }}
         className={className}
         tabIndex={tabIndex}
         // aria-label={this.props['aria-label']}
