@@ -1,7 +1,7 @@
 {
   "name": "react-star",
   "version": "1.0.0",
-  "description": "",
+  "description": "A tiny star rating component with custom icons for React.",
   "author": "Bunlong <bunlong.van@gmail.com>",
   "license": "MIT",
   "repository": {

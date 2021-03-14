@@ -4,7 +4,7 @@
 
 # react-star
 
-A tiny star rating react component with custom symbols.
+A tiny star rating component with custom icons for React.
 
 <!-- ### 💻 Live [Demo](https://codesandbox.io/s/react-screen-capture-i9f4d)
 
