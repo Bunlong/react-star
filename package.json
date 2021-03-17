@@ -17,7 +17,7 @@
     "react-star",
     "star"
   ],
-  "homepage": "",
+  "homepage": "https://github.com/Bunlong/react-star",
   "main": "dist/react-star.js",
   "module": "dist/react-star.es.js",
   "jsnext:main": "dist/react-star.es.js",

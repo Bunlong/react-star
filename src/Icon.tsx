@@ -69,7 +69,9 @@ class Icon extends React.PureComponent<Props> {
 
     return (
       <span
-        style={index === 0 ? Object.assign({}, style, { marginLeft: 0 }) : style}
+        style={
+          index === 0 ? Object.assign({}, style, { marginLeft: 0 }) : style
+        }
         onClick={handleMouseClick}
         onMouseMove={handleMouseMove}
         onTouchMove={handleMouseMove}
