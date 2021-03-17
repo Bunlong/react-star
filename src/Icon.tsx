@@ -26,25 +26,26 @@ class Icon extends React.PureComponent<Props> {
       emptyIcon,
       icon,
       direction,
-    }  = this.props
+    } = this.props;
     const showbgIcon = percent < 100;
     const bgIconContainerStyle = showbgIcon
       ? {}
-      : {
-          visibility: 'hidden'
-        } as CSSProperties;
+      : ({
+          visibility: 'hidden',
+        } as CSSProperties);
     const iconContainerStyle = {
       display: 'inline-block',
       position: 'absolute',
       overflow: 'hidden',
       top: 0,
       [direction === 'rtl' ? 'right' : 'left']: 0,
-      width: `${percent}%`
+      width: `${percent}%`,
     } as CSSProperties;
     const style = {
       cursor: !readOnly ? 'pointer' : 'inherit',
       display: 'inline-block',
       position: 'relative',
+      marginLeft: 5,
     } as CSSProperties;
 
     function handleMouseClick(event: any) {
@@ -66,22 +67,18 @@ class Icon extends React.PureComponent<Props> {
       }
     }
 
-    return(
+    return (
       <span
-        style={style}
+        style={index === 0 ? Object.assign({}, style, { marginLeft: 0 }) : style}
         onClick={handleMouseClick}
         onMouseMove={handleMouseMove}
         onTouchMove={handleMouseMove}
         onTouchEnd={handleTouchEnd}
       >
-        <span style={bgIconContainerStyle}>
-          {renderIcon(emptyIcon)}
-        </span>
-        <span style={iconContainerStyle}>
-          {renderIcon(icon)}
-        </span>
+        <span style={bgIconContainerStyle}>{renderIcon(emptyIcon)}</span>
+        <span style={iconContainerStyle}>{renderIcon(icon)}</span>
       </span>
-    )
+    );
   }
 }
 

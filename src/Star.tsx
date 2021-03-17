@@ -38,7 +38,9 @@ interface Props {
   onChange: (index?: number, event?: any) => void;
 }
 
-interface State { value: number; }
+interface State {
+  value: number;
+}
 
 class Star extends React.PureComponent<Props, State> {
   static defaultProps: Partial<Props> = {
@@ -46,11 +48,17 @@ class Star extends React.PureComponent<Props, State> {
     max: DEFAULT_MAX,
     step: DEFAULT_STEP,
     readOnly: DEFAULT_READONLY,
-    quiet: DEFAULT_QUIET,
     fraction: DEFAULT_FRACTION,
-    emptyIcon: <ThinStar style={{ fill: '#000000', stroke: '#000000', opacity: '26%' }} />,
+    emptyIcon: (
+      <ThinStar
+        style={{ fill: '#000000', stroke: '#000000', opacity: '26%' }}
+      />
+    ),
     icon: <ThinStar style={{ fill: '#ffb400', stroke: '#ffb400' }} />,
-    placeholderIcon: <ThinStar style={{ fill: '#ffb400', stroke: '#ffb400' }} />,
+    placeholderIcon: (
+      <ThinStar style={{ fill: '#ffb400', stroke: '#ffb400' }} />
+    ),
+    quiet: DEFAULT_QUIET,
     direction: 'ltr',
     onHover: NO_OPERATION,
     onClick: NO_OPERATION,
@@ -133,7 +141,11 @@ class Star extends React.PureComponent<Props, State> {
         className={className}
         tabIndex={tabIndex || 0}
         // aria-label={this.props['aria-label']}
-        totalIcons={calculateTotalIcons(min || DEFAULT_MIN, max || DEFAULT_MAX, step || DEFAULT_STEP)}
+        totalIcons={calculateTotalIcons(
+          min || DEFAULT_MIN,
+          max || DEFAULT_MAX,
+          step || DEFAULT_STEP,
+        )}
         value={this.tranlateValueToDisplayValue(this.state.value)}
         placeholderValue={this.tranlateValueToDisplayValue(
           this.props.placeholderRating || 0,
