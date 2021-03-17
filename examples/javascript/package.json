@@ -1,10 +1,11 @@
 {
-  "name": "react-screen-capture",
+  "name": "react-star",
   "homepage": "https://github.com/Bunlong",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "font-awesome": "^4.7.0",
     "prop-types": "^15.6.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

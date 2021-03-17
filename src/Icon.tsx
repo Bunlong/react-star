@@ -3,9 +3,9 @@ import { renderIcon } from './utils';
 
 interface Props {
   index: number;
-  readonly: boolean;
-  inactiveIcon: string | object | JSX.Element;
-  activeIcon: string | object | JSX.Element;
+  readOnly: boolean;
+  emptyIcon: string | object | JSX.Element;
+  icon: string | object | JSX.Element;
   percent: number;
   direction: string;
   onClick?: (index: number, event: any) => void;
@@ -17,24 +17,22 @@ interface Props {
 class Icon extends React.PureComponent<Props> {
   render() {
     const {
-      readonly,
+      readOnly,
       onClick,
       index,
       onMouseMove,
       onTouchEnd,
       percent,
-      inactiveIcon,
+      emptyIcon,
+      icon,
       direction,
-      activeIcon,
     }  = this.props
-    const backgroundIcon = renderIcon(inactiveIcon);
     const showbgIcon = percent < 100;
     const bgIconContainerStyle = showbgIcon
       ? {}
       : {
           visibility: 'hidden'
         } as CSSProperties;
-    const icon = renderIcon(activeIcon);
     const iconContainerStyle = {
       display: 'inline-block',
       position: 'absolute',
@@ -44,7 +42,7 @@ class Icon extends React.PureComponent<Props> {
       width: `${percent}%`
     } as CSSProperties;
     const style = {
-      cursor: !readonly ? 'pointer' : 'inherit',
+      cursor: !readOnly ? 'pointer' : 'inherit',
       display: 'inline-block',
       position: 'relative',
     } as CSSProperties;
@@ -77,10 +75,10 @@ class Icon extends React.PureComponent<Props> {
         onTouchEnd={handleTouchEnd}
       >
         <span style={bgIconContainerStyle}>
-          {backgroundIcon}
+          {renderIcon(emptyIcon)}
         </span>
         <span style={iconContainerStyle}>
-          {icon}
+          {renderIcon(icon)}
         </span>
       </span>
     )

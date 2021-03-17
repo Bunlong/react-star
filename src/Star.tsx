@@ -1,75 +1,63 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import StarIcon from './StarIcon';
 import { calculateTotalIcons } from './utils';
-
-const background = {
-  borderRadius: '50%',
-  border: '5px double white',
-  display: 'inline-block',
-  height: 30,
-  width: 30,
-} as CSSProperties;
-
-const styles = {
-  empty: {
-    ...background,
-    backgroundColor: '#ccc',
-  } as CSSProperties,
-  full: {
-    ...background,
-    backgroundColor: 'black',
-  } as CSSProperties,
-  placeholder: {
-    ...background,
-    backgroundColor: 'red',
-  } as CSSProperties,
-};
-
-function star() {}
-star._name = 'react_star';
+import { ThinStar } from './stars';
+import {
+  DEFAULT_MIN,
+  DEFAULT_MAX,
+  DEFAULT_STEP,
+  DEFAULT_READONLY,
+  DEFAULT_QUIET,
+  DEFAULT_FRACTION,
+  NO_OPERATION,
+} from './models';
 
 interface Props {
   id?: number;
   className?: any;
   style?: any;
   tabIndex?: number;
-  start?: number;
-  stop?: number;
+  min?: number;
+  max?: number;
   step?: number;
-  initialRating?: number;
+  defaultValue?: number;
   placeholderRating?: number;
-  readonly?: boolean;
+  readOnly?: boolean;
   quiet?: boolean;
-  fractions?: number;
+  fraction?: number;
   direction?: string;
-  emptyIcon?: (string | object | JSX.Element)[]| string | object | JSX.Element;
-  fullIcon: (string | object | JSX.Element)[]| string | object | JSX.Element;
-  placeholderIcon: (string | object | JSX.Element)[]| string | object | JSX.Element;
+  emptyIcon?: (string | object | JSX.Element)[] | string | object | JSX.Element;
+  icon: (string | object | JSX.Element)[] | string | object | JSX.Element;
+  placeholderIcon:
+    | (string | object | JSX.Element)[]
+    | string
+    | object
+    | JSX.Element;
   onHover: (index?: number, event?: any) => void;
   onClick: (index?: number, event?: any) => void;
   onChange: (index?: number, event?: any) => void;
 }
 
-interface State {
-  value: number;
-}
+interface State { value: number; }
 
 class Star extends React.PureComponent<Props, State> {
   static defaultProps: Partial<Props> = {
-    start: 0,
-    stop: 5,
-    step: 1,
-    readonly: false,
-    quiet: false,
-    fractions: 1,
+    min: DEFAULT_MIN,
+    max: DEFAULT_MAX,
+    step: DEFAULT_STEP,
+    readOnly: DEFAULT_READONLY,
+    quiet: DEFAULT_QUIET,
+    fraction: DEFAULT_FRACTION,
+    emptyIcon: <ThinStar style={{ fill: '#000000', stroke: '#000000', opacity: '26%' }} />,
+    icon: <ThinStar style={{ fill: '#ffb400', stroke: '#ffb400' }} />,
+    placeholderIcon: <ThinStar style={{ fill: '#ffb400', stroke: '#ffb400' }} />,
     direction: 'ltr',
-    onHover: star,
-    onClick: star,
-    onChange: star,
-    emptyIcon: styles.empty,
-    fullIcon: styles.full,
-    placeholderIcon: styles.placeholder
+    onHover: NO_OPERATION,
+    onClick: NO_OPERATION,
+    onChange: NO_OPERATION,
   };
+
+  state = { value: this.props.defaultValue } as State;
 
   constructor(props: any) {
     super(props);
@@ -77,17 +65,13 @@ class Star extends React.PureComponent<Props, State> {
     this.handleHover = this.handleHover.bind(this);
   }
 
-  state = {
-    value: this.props.initialRating
-  } as State;
-
   tranlateValueToDisplayValue(value: number) {
     if (value === undefined) {
       return 0;
     }
-    const {start, step} = this.props;
-    if (start && step) {
-      return (value - start) / step;
+    const { min, step } = this.props;
+    if (min && step) {
+      return (value - min) / step;
     }
     return value;
   }
@@ -96,25 +80,31 @@ class Star extends React.PureComponent<Props, State> {
     const newValue = this.translateDisplayValueToValue(value || 0);
     this.props.onClick(newValue);
     if (this.state.value !== newValue) {
-      this.setState({
-        value: newValue
-      }, () => this.props.onChange(this.state.value));
+      this.setState(
+        {
+          value: newValue,
+        },
+        () => this.props.onChange(this.state.value),
+      );
     }
   }
 
   handleHover(displayValue?: number) {
-    const value = displayValue === undefined
-      ? displayValue
-      : this.translateDisplayValueToValue(displayValue);
+    const value =
+      displayValue === undefined
+        ? displayValue
+        : this.translateDisplayValueToValue(displayValue);
     this.props.onHover(value);
   }
 
   translateDisplayValueToValue(displayValue: number) {
-    let translatedValue = 0
-    translatedValue = displayValue * (this.props.step || 0) + (this.props.start || 0);
+    let translatedValue = 0;
+    const { min, step, fraction } = this.props;
+    translatedValue =
+      displayValue * (step || DEFAULT_STEP) + (min || DEFAULT_MIN);
     // minimum value cannot be equal to start, since it's exclusive
-    return translatedValue === this.props.start
-      ? translatedValue + 1 / (this.props.fractions || 0)
+    return translatedValue === min
+      ? translatedValue + 1 / (fraction || DEFAULT_FRACTION)
       : translatedValue;
   }
 
@@ -122,18 +112,18 @@ class Star extends React.PureComponent<Props, State> {
     const {
       step,
       emptyIcon,
-      fullIcon,
+      icon,
       placeholderIcon,
-      readonly,
+      readOnly,
       quiet,
-      fractions,
+      fraction,
       direction,
-      start,
-      stop,
+      min,
+      max,
       id,
       className,
       style,
-      tabIndex
+      tabIndex,
     } = this.props;
 
     return (
@@ -143,20 +133,22 @@ class Star extends React.PureComponent<Props, State> {
         className={className}
         tabIndex={tabIndex || 0}
         // aria-label={this.props['aria-label']}
-        totalIcons={calculateTotalIcons(start || 0, stop || 0, step || 0)}
+        totalIcons={calculateTotalIcons(min || DEFAULT_MIN, max || DEFAULT_MAX, step || DEFAULT_STEP)}
         value={this.tranlateValueToDisplayValue(this.state.value)}
-        placeholderValue={this.tranlateValueToDisplayValue(this.props.placeholderRating || 0)}
-        readonly={readonly || false}
-        quiet={quiet || false}
-        fractions={fractions || 0}
+        placeholderValue={this.tranlateValueToDisplayValue(
+          this.props.placeholderRating || 0,
+        )}
+        readOnly={readOnly || DEFAULT_READONLY}
+        quiet={quiet || DEFAULT_QUIET}
+        fractions={fraction || DEFAULT_FRACTION}
         direction={direction || ''}
         emptyIcon={emptyIcon || ''}
-        fullIcon={fullIcon || ''}
+        icon={icon || ''}
         placeholderIcon={placeholderIcon || ''}
         onClick={this.handleClick}
         onHover={this.handleHover}
       />
-    )
+    );
   }
 }
 

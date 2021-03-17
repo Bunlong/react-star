@@ -10,12 +10,16 @@ interface Props {
   totalIcons: number;
   value: number;
   placeholderValue: number;
-  readonly: boolean;
+  readOnly: boolean;
   quiet: boolean;
   fractions: number;
-  emptyIcon: (string | object | JSX.Element)[]| string | object | JSX.Element;
-  fullIcon: (string | object | JSX.Element)[]| string | object | JSX.Element;
-  placeholderIcon: (string | object | JSX.Element)[]| string | object | JSX.Element;
+  emptyIcon: (string | object | JSX.Element)[] | string | object | JSX.Element;
+  icon: (string | object | JSX.Element)[] | string | object | JSX.Element;
+  placeholderIcon:
+    | (string | object | JSX.Element)[]
+    | string
+    | object
+    | JSX.Element;
   onClick: (index: number, event: any) => void;
   onHover: (index?: number, event?: any) => void;
 }
@@ -42,32 +46,40 @@ class StarIcon extends React.PureComponent<Props, State> {
   onMouseLeave() {
     this.setState({
       displayValue: this.props.value,
-      interacting: false
+      interacting: false,
     });
   }
 
   calculateHoverPercentage(event: any) {
-    const clientX = event.nativeEvent.type.indexOf('touch') > -1
-      ? event.nativeEvent.type.indexOf('touchend') > -1
-        ? event.changedTouches[0].clientX
-        : event.touches[0].clientX
-      : event.clientX;
+    const clientX =
+      event.nativeEvent.type.indexOf('touch') > -1
+        ? event.nativeEvent.type.indexOf('touchend') > -1
+          ? event.changedTouches[0].clientX
+          : event.touches[0].clientX
+        : event.clientX;
 
     const targetRect = event.target.getBoundingClientRect();
-    const delta = this.props.direction === 'rtl'
-      ? targetRect.right - clientX
-      : clientX - targetRect.left;
+    const delta =
+      this.props.direction === 'rtl'
+        ? targetRect.right - clientX
+        : clientX - targetRect.left;
 
     return delta < 0 ? 0 : delta / targetRect.width;
   }
 
   calculateDisplayValue(iconIndex: number, event: any) {
     const percentage = this.calculateHoverPercentage(event);
-    const fraction = Math.ceil(percentage % 1 * this.props.fractions) / this.props.fractions;
+    const fraction =
+      Math.ceil((percentage % 1) * this.props.fractions) / this.props.fractions;
     const precision = 10 ** 3;
     const displayValue =
-      iconIndex + (Math.floor(percentage) + Math.floor(fraction * precision) / precision);
-    return displayValue > 0 ? displayValue > this.props.totalIcons ? this.props.totalIcons : displayValue : 1 / this.props.fractions;
+      iconIndex +
+      (Math.floor(percentage) + Math.floor(fraction * precision) / precision);
+    return displayValue > 0
+      ? displayValue > this.props.totalIcons
+        ? this.props.totalIcons
+        : displayValue
+      : 1 / this.props.fractions;
   }
 
   iconClick(iconIndex: number, event: any) {
@@ -78,8 +90,8 @@ class StarIcon extends React.PureComponent<Props, State> {
   iconMouseMove(iconIndex: number, event: any) {
     const value = this.calculateDisplayValue(iconIndex, event);
     this.setState({
-      interacting: !this.props.readonly,
-      displayValue: value
+      interacting: !this.props.readOnly,
+      displayValue: value,
     });
   }
 
@@ -94,7 +106,7 @@ class StarIcon extends React.PureComponent<Props, State> {
   UNSAFE_componentWillReceiveProps(nextProps: any) {
     const valueChanged = this.props.value !== nextProps.value;
     this.setState((prevState) => ({
-      displayValue: valueChanged ? nextProps.value : prevState.displayValue
+      displayValue: valueChanged ? nextProps.value : prevState.displayValue,
     }));
   }
 
@@ -115,27 +127,22 @@ class StarIcon extends React.PureComponent<Props, State> {
       direction,
       className,
       tabIndex,
-      readonly,
+      readOnly,
       totalIcons,
       emptyIcon,
       placeholderValue,
       value,
       placeholderIcon,
-      fullIcon,
+      icon,
       quiet,
     } = this.props;
-    const {
-      interacting,
-      displayValue,
-    } = this.state;
+    const { interacting, displayValue } = this.state;
     const icons = [] as any;
     const empty = [].concat(emptyIcon as any);
     const shouldDisplayPlaceholder =
-      placeholderValue !== 0 &&
-      value === 0 &&
-      !interacting;
+      placeholderValue !== 0 && value === 0 && !interacting;
     const placeholder = [].concat(placeholderIcon as any);
-    const full = [].concat(fullIcon as any);
+    const full = [].concat(icon as any);
 
     let renderedValue;
     if (shouldDisplayPlaceholder) {
@@ -144,53 +151,59 @@ class StarIcon extends React.PureComponent<Props, State> {
       renderedValue = quiet ? value : displayValue;
     }
 
-    const fullIcons = Math.floor(renderedValue);
+    const flooredRenderedValue = Math.floor(renderedValue);
 
     for (let i = 0; i < totalIcons; i++) {
       let percent;
-      if (i - fullIcons < 0) {
+      if (i - flooredRenderedValue < 0) {
         percent = 100;
-      } else if (i - fullIcons === 0) {
+      } else if (i - flooredRenderedValue === 0) {
         percent = (renderedValue - i) * 100;
       } else {
         percent = 0;
       }
-
       icons.push(
         <Icon
           key={i}
           index={i}
-          readonly={readonly}
-          inactiveIcon={empty[i % empty.length]}
-          activeIcon={
-            shouldDisplayPlaceholder ? placeholder[i % full.length] : full[i % full.length]
+          readOnly={readOnly}
+          emptyIcon={empty[i % empty.length]}
+          icon={
+            shouldDisplayPlaceholder
+              ? placeholder[i % full.length]
+              : full[i % full.length]
           }
           percent={percent}
           direction={direction}
-          {...(!readonly && {
+          {...(!readOnly && {
             onClick: this.iconClick,
             onMouseMove: this.iconMouseMove,
             onTouchMove: this.iconMouseMove,
-            onTouchEnd: this.iconEnd
+            onTouchEnd: this.iconEnd,
           })}
-        />
+        />,
       );
     }
 
     return (
       <span
         id={`${id}`}
-        style={{...style, display: 'inline-block', outline: 'none', direction }}
+        style={{
+          ...style,
+          display: 'inline-block',
+          outline: 'none',
+          direction,
+        }}
         className={className}
         tabIndex={tabIndex}
         // aria-label={this.props['aria-label']}
-        {...(!readonly && {
-          onMouseLeave: this.onMouseLeave
+        {...(!readOnly && {
+          onMouseLeave: this.onMouseLeave,
         })}
       >
         {icons}
       </span>
-    )
+    );
   }
 }
 

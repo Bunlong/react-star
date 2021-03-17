@@ -6,13 +6,12 @@
 
 A tiny star rating component with custom icons for React.
 
-<!-- ### 💻 Live [Demo](https://codesandbox.io/s/react-screen-capture-i9f4d)
+<!-- ### 💻 Live [Demo](https://codesandbox.io/s/react-screen-capture-i9f4d) -->
 
 ## 🎁 Features
 
 * Easy to use
 * Compatible with both JavaScript and TypeScript
-* Take a snapshot of the webpage's screen or part of the screen -->
 
 ## 🔧 Install
 
@@ -28,7 +27,67 @@ react-star is available on yarn as well. It can be installed with the following 
 yarn add react-star
 ```
 
-<!-- ## 🔰 Callbacks
+## 💡 Usage
+
+```jsx
+import React from 'react';
+import { Star } from 'react-star';
+
+class App extends React.Component {
+  render() {
+    return (
+      <Star
+        onChange={(value) => console.log(value)}
+      />
+    );
+  }
+};
+
+export default App;
+```
+
+## 📖 APIs
+
+<table>
+  <tr>
+    <th>Props</th>
+    <th>Type</th>
+    <th>Default</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>defaultValue</td>
+    <td>number</td>
+    <td>0</td>
+    <td>The default value. Use when the component is not controlled.</td>
+  </tr>
+  <tr>
+    <td>fraction</td>
+    <td>number</td>
+    <td>1</td>
+    <td>The number of equal subdivisions that can be selected as a rating in each icon, example, for a fractions value of 2, you will be able to select a rating with a precision of down to half a icon.</td>
+  </tr>
+  <tr>
+    <td>readOnly</td>
+    <td>boolean</td>
+    <td>false</td>
+    <td>Removes all hover effects and pointer events.</td>
+  </tr>
+  <tr>
+    <td>min</td>
+    <td>number</td>
+    <td>0</td>
+    <td>Minimum star.</td>
+  </tr>
+  <tr>
+    <td>max</td>
+    <td>number</td>
+    <td>5</td>
+    <td>Maximum star.</td>
+  </tr>
+</table>
+
+## 🔰 Callbacks
 
 <table>
   <tr>
@@ -37,82 +96,21 @@ yarn add react-star
     <th>Description</th>
   </tr>
   <tr>
-    <td>onStartCapture</td>
-    <td><code>() => null</code></td>
-    <td>To start capture webpage's screen.</td>
+    <td>onChange</td>
+    <td><code>(value) => {}</code></td>
+    <td>The onChange props fires the moment when the value of the element is changed.</td>
   </tr>
   <tr>
-    <td>onEndCapture</td>
-    <td><code>(base64Source: string) => null</code></td>
-    <td>To end capture webpage's screen and get base64 source.</td>
+    <td>onClick</td>
+    <td><code>(value) => {}</code></td>
+    <td>The onclick props fires on a mouse click on the element.</td>
+  </tr>
+   <tr>
+    <td>onHover</td>
+    <td><code>(value) => {}</code></td>
+    <td>The onHover event occurs when the mouse pointer is moved onto an element.</td>
   </tr>
 </table>
-
-## 💡 Usage
-
-```jsx
-import React from 'react';
-import { ScreenCapture } from 'react-screen-capture';
-
-class App extends React.Component {
-  state = {
-    screenCapture: '',
-  };
-
-  handleScreenCapture = screenCapture => {
-    this.setState({screenCapture});
-  };
-
-  handleSave = () => {
-    const screenCaptureSource = this.state.screenCapture;
-    const downloadLink = document.createElement('a');
-    const fileName = 'react-screen-capture.png';
-
-    downloadLink.href = screenCaptureSource;
-    downloadLink.download = fileName;
-    downloadLink.click();
-  };
-
-  render() {
-    const { screenCapture } = this.state;
-
-    return (
-      <ScreenCapture onEndCapture={this.handleScreenCapture}>
-        {({ onStartCapture }) => (
-          <div>
-            <button onClick={onStartCapture}>Capture</button>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-              distinctio exercitationem a tempore delectus ducimus necessitatibus
-              dolor voluptatum aut est quaerat aspernatur, vero quod aperiam odio.
-              Exercitationem distinctio in voluptates?
-            </p>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut molestiae
-              deserunt voluptas, labore a expedita error eligendi sunt fugit, nesciunt
-              ullam corrupti quas natus, officia rerum? Officia cum amet quidem.
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat, iusto
-              repellat quae quos in rerum sunt obcaecati provident placeat hic saepe
-              possimus eaque repellendus consequuntur quisquam nihil, sit ullam
-              ratione.
-            </p>
-            <center>
-              <img src={screenCapture} alt='react-screen-capture' />
-              <p>
-                {screenCapture && <button onClick={this.handleSave}>Download</button>}
-              </p>
-            </center>
-          </div>
-        )}
-      </ScreenCapture>
-    );
-  }
-};
-
-export default App;
-``` -->
 
 ## ❗ Issues
 
@@ -134,3 +132,32 @@ How to contribute:
 ## ⚖️ License
 
 The MIT License [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+<!-- 
+
+import React, { CSSProperties } from 'react';
+
+const background = {
+  borderRadius: '50%',
+  border: '5px double white',
+  display: 'inline-block',
+  height: 30,
+  width: 30,
+} as CSSProperties;
+
+const styles = {
+  empty: {
+    ...background,
+    backgroundColor: '#ccc',
+  } as CSSProperties,
+  full: {
+    ...background,
+    backgroundColor: 'black',
+  } as CSSProperties,
+  placeholder: {
+    ...background,
+    backgroundColor: 'red',
+  } as CSSProperties,
+};
+
+-->
