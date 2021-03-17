@@ -12,7 +12,7 @@ interface Props {
   placeholderValue: number;
   readOnly: boolean;
   quiet: boolean;
-  fractions: number;
+  fraction: number;
   emptyIcon: (string | object | JSX.Element)[] | string | object | JSX.Element;
   icon: (string | object | JSX.Element)[] | string | object | JSX.Element;
   placeholderIcon:
@@ -70,7 +70,7 @@ class StarIcon extends React.PureComponent<Props, State> {
   calculateDisplayValue(iconIndex: number, event: any) {
     const percentage = this.calculateHoverPercentage(event);
     const fraction =
-      Math.ceil((percentage % 1) * this.props.fractions) / this.props.fractions;
+      Math.ceil((percentage % 1) * this.props.fraction) / this.props.fraction;
     const precision = 10 ** 3;
     const displayValue =
       iconIndex +
@@ -79,7 +79,7 @@ class StarIcon extends React.PureComponent<Props, State> {
       ? displayValue > this.props.totalIcons
         ? this.props.totalIcons
         : displayValue
-      : 1 / this.props.fractions;
+      : 1 / this.props.fraction;
   }
 
   iconClick(iconIndex: number, event: any) {

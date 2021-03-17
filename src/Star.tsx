@@ -27,8 +27,8 @@ interface Props {
   fraction?: number;
   direction?: string;
   emptyIcon?: (string | object | JSX.Element)[] | string | object | JSX.Element;
-  icon: (string | object | JSX.Element)[] | string | object | JSX.Element;
-  placeholderIcon:
+  icon?: (string | object | JSX.Element)[] | string | object | JSX.Element;
+  placeholderIcon?:
     | (string | object | JSX.Element)[]
     | string
     | object
@@ -152,7 +152,7 @@ class Star extends React.PureComponent<Props, State> {
         )}
         readOnly={readOnly || DEFAULT_READONLY}
         quiet={quiet || DEFAULT_QUIET}
-        fractions={fraction || DEFAULT_FRACTION}
+        fraction={fraction || DEFAULT_FRACTION}
         direction={direction || ''}
         emptyIcon={emptyIcon || ''}
         icon={icon || ''}
