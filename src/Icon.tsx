@@ -17,13 +17,13 @@ class Icon extends React.PureComponent<Props> {
   render() {
     const {
       readOnly,
+      onClick,
       index,
+      onMouseMove,
+      onTouchEnd,
       percent,
       emptyIcon,
       icon,
-      onClick,
-      onMouseMove,
-      onTouchEnd,
     } = this.props;
     const showbgIcon = percent < 100;
     const bgIconContainerStyle = showbgIcon
@@ -32,10 +32,11 @@ class Icon extends React.PureComponent<Props> {
           visibility: 'hidden',
         } as CSSProperties);
     const iconContainerStyle = {
-      top: 0,
       display: 'inline-block',
       position: 'absolute',
       overflow: 'hidden',
+      top: 0,
+      ['left']: 0,
       width: `${percent}%`,
     } as CSSProperties;
     const style = {
