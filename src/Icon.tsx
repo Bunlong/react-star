@@ -7,7 +7,6 @@ interface Props {
   emptyIcon: string | object | JSX.Element;
   icon: string | object | JSX.Element;
   percent: number;
-  direction: string;
   onClick?: (index: number, event: any) => void;
   onMouseMove?: (index: number, event: any) => void;
   onTouchEnd?: (index: number, event: any) => void;
@@ -22,7 +21,6 @@ class Icon extends React.PureComponent<Props> {
       percent,
       emptyIcon,
       icon,
-      direction,
       onClick,
       onMouseMove,
       onTouchEnd,
@@ -38,7 +36,6 @@ class Icon extends React.PureComponent<Props> {
       position: 'absolute',
       overflow: 'hidden',
       top: 0,
-      [direction === 'rtl' ? 'right' : 'left']: 0,
       width: `${percent}%`,
     } as CSSProperties;
     const style = {
