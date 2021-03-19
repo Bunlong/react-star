@@ -26,7 +26,6 @@ interface Props {
   readOnly?: boolean;
   quiet?: boolean;
   fraction?: number;
-  direction?: string;
   emptyIcon?: (string | object | JSX.Element)[] | string | object | JSX.Element;
   icon?: (string | object | JSX.Element)[] | string | object | JSX.Element;
   placeholderIcon?:
@@ -60,7 +59,6 @@ class Star extends React.PureComponent<Props, State> {
       <ThinStar style={{ fill: '#ffb400', stroke: '#ffb400' }} />
     ),
     quiet: DEFAULT_QUIET,
-    direction: 'ltr',
     onHover: NO_OPERATION,
     onClick: NO_OPERATION,
     onChange: NO_OPERATION,
@@ -129,7 +127,6 @@ class Star extends React.PureComponent<Props, State> {
       readOnly,
       quiet,
       fraction,
-      direction,
       min,
       max,
       id,
@@ -157,7 +154,6 @@ class Star extends React.PureComponent<Props, State> {
         readOnly={readOnly || DEFAULT_READONLY}
         quiet={quiet || DEFAULT_QUIET}
         fraction={fraction || DEFAULT_FRACTION}
-        direction={direction || ''}
         emptyIcon={emptyIcon || ''}
         icon={icon || ''}
         placeholderIcon={placeholderIcon || ''}
