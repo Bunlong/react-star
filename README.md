@@ -1,4 +1,8 @@
 <p align="center">
+  <img src="https://raw.githubusercontent.com/Bunlong/react-star/main/react-star.png" alt="react-star" />
+</p>
+
+<p align="center">
   ⭐️ Please support us by giving a star! Thanks! ⭐️
 </p>
 
