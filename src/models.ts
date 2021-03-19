@@ -5,3 +5,4 @@ export const DEFAULT_READONLY = false;
 export const DEFAULT_QUIET = false;
 export const DEFAULT_FRACTION = 1;
 export const NO_OPERATION = () => {};
+export const DEFAULT_OTHER = 0;

@@ -10,6 +10,7 @@ import {
   DEFAULT_QUIET,
   DEFAULT_FRACTION,
   NO_OPERATION,
+  DEFAULT_OTHER,
 } from './models';
 
 interface Props {
@@ -85,7 +86,10 @@ class Star extends React.PureComponent<Props, State> {
   }
 
   handleClick(value?: number) {
-    const newValue = this.translateDisplayValueToValue(value || 0);
+    let newValue = this.translateDisplayValueToValue(value || DEFAULT_OTHER);
+    if (newValue === this.state.value) {
+      newValue = 0;
+    }
     this.props.onClick(newValue);
     if (this.state.value !== newValue) {
       this.setState(
@@ -136,10 +140,10 @@ class Star extends React.PureComponent<Props, State> {
 
     return (
       <StarIcon
-        id={id || 0}
+        id={id || DEFAULT_OTHER}
         style={style}
         className={className}
-        tabIndex={tabIndex || 0}
+        tabIndex={tabIndex || DEFAULT_OTHER}
         // aria-label={this.props['aria-label']}
         totalIcons={calculateTotalIcons(
           min || DEFAULT_MIN,
@@ -148,7 +152,7 @@ class Star extends React.PureComponent<Props, State> {
         )}
         value={this.tranlateValueToDisplayValue(this.state.value)}
         placeholderValue={this.tranlateValueToDisplayValue(
-          this.props.placeholderRating || 0,
+          this.props.placeholderRating || DEFAULT_OTHER,
         )}
         readOnly={readOnly || DEFAULT_READONLY}
         quiet={quiet || DEFAULT_QUIET}
