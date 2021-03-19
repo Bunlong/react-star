@@ -21,14 +21,4 @@ yarn-error.log*
 
 package-lock.json
 
-/docs/node_modules
-/docs/.next
-/docs/package-lock.json
-
-/supports/default/node_modules
-/supports/default/.next
-/supports/default/package-lock.json
-
-/supports/typescript/node_modules
-/supports/typescript/.next
-/supports/typescript/package-lock.json
+/react-native-star
