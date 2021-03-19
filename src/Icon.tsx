@@ -32,10 +32,10 @@ class Icon extends React.PureComponent<Props> {
           visibility: 'hidden',
         } as CSSProperties);
     const iconContainerStyle = {
+      top: 0,
       display: 'inline-block',
       position: 'absolute',
       overflow: 'hidden',
-      top: 0,
       width: `${percent}%`,
     } as CSSProperties;
     const style = {
