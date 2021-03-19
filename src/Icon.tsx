@@ -18,14 +18,14 @@ class Icon extends React.PureComponent<Props> {
   render() {
     const {
       readOnly,
-      onClick,
       index,
-      onMouseMove,
-      onTouchEnd,
       percent,
       emptyIcon,
       icon,
       direction,
+      onClick,
+      onMouseMove,
+      onTouchEnd,
     } = this.props;
     const showbgIcon = percent < 100;
     const bgIconContainerStyle = showbgIcon
