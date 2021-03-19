@@ -4,7 +4,6 @@ import Icon from './Icon';
 interface Props {
   id: number;
   style: any;
-  direction: string;
   className: any;
   tabIndex: number;
   totalIcons: number;
@@ -57,13 +56,8 @@ class StarIcon extends React.PureComponent<Props, State> {
           ? event.changedTouches[0].clientX
           : event.touches[0].clientX
         : event.clientX;
-
     const targetRect = event.target.getBoundingClientRect();
-    const delta =
-      this.props.direction === 'rtl'
-        ? targetRect.right - clientX
-        : clientX - targetRect.left;
-
+    const delta = clientX - targetRect.left;
     return delta < 0 ? 0 : delta / targetRect.width;
   }
 
@@ -124,7 +118,6 @@ class StarIcon extends React.PureComponent<Props, State> {
     const {
       id,
       style,
-      direction,
       className,
       tabIndex,
       readOnly,
@@ -174,7 +167,6 @@ class StarIcon extends React.PureComponent<Props, State> {
               : full[i % full.length]
           }
           percent={percent}
-          direction={direction}
           {...(!readOnly && {
             onClick: this.iconClick,
             onMouseMove: this.iconMouseMove,
@@ -192,7 +184,6 @@ class StarIcon extends React.PureComponent<Props, State> {
           ...style,
           display: 'inline-block',
           outline: 'none',
-          direction,
         }}
         className={className}
         tabIndex={tabIndex}
