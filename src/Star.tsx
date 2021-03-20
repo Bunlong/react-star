@@ -49,12 +49,12 @@ class Star extends React.PureComponent<Props, State> {
     step: DEFAULT_STEP,
     readOnly: DEFAULT_READONLY,
     fraction: DEFAULT_FRACTION,
+    icon: <ThinStar style={{ fill: '#ffb400', stroke: '#ffb400' }} />,
     emptyIcon: (
       <ThinStar
         style={{ fill: '#000000', stroke: '#000000', opacity: '26%' }}
       />
     ),
-    icon: <ThinStar style={{ fill: '#ffb400', stroke: '#ffb400' }} />,
     placeholderIcon: (
       <ThinStar style={{ fill: '#ffb400', stroke: '#ffb400' }} />
     ),

@@ -12,8 +12,8 @@ interface Props {
   readOnly: boolean;
   quiet: boolean;
   fraction: number;
-  emptyIcon: (string | object | JSX.Element)[] | string | object | JSX.Element;
   icon: (string | object | JSX.Element)[] | string | object | JSX.Element;
+  emptyIcon: (string | object | JSX.Element)[] | string | object | JSX.Element;
   placeholderIcon:
     | (string | object | JSX.Element)[]
     | string

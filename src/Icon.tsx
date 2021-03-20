@@ -4,9 +4,9 @@ import { renderIcon } from './utils';
 interface Props {
   index: number;
   readOnly: boolean;
-  emptyIcon: string | object | JSX.Element;
-  icon: string | object | JSX.Element;
   percent: number;
+  icon: string | object | JSX.Element;
+  emptyIcon: string | object | JSX.Element;
   onClick?: (index: number, event: any) => void;
   onMouseMove?: (index: number, event: any) => void;
   onTouchEnd?: (index: number, event: any) => void;
