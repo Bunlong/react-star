@@ -83,6 +83,14 @@ class Star extends React.PureComponent<Props, State> {
     return value;
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps: any) {
+    if (this.props.defaultValue !== nextProps.defaultValue) {
+      this.setState(() => ({
+        value: nextProps.defaultValue,
+      }));
+    }
+  }
+
   handleClick(value?: number) {
     let newValue = this.translateDisplayValueToValue(value || DEFAULT_OTHER);
     if (newValue === this.state.value) {

@@ -98,10 +98,11 @@ class StarIcon extends React.PureComponent<Props, State> {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps: any) {
-    const valueChanged = this.props.value !== nextProps.value;
-    this.setState((prevState) => ({
-      displayValue: valueChanged ? nextProps.value : prevState.displayValue,
-    }));
+    if (this.props.value !== nextProps.value) {
+      this.setState(() => ({
+        displayValue: nextProps.value,
+      }));
+    }
   }
 
   componentDidUpdate(prevProps: any, prevState: any) {
