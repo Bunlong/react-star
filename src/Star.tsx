@@ -44,6 +44,7 @@ interface State {
 
 class Star extends React.PureComponent<Props, State> {
   static defaultProps: Partial<Props> = {
+    defaultValue: DEFAULT_OTHER,
     min: DEFAULT_MIN,
     max: DEFAULT_MAX,
     step: DEFAULT_STEP,
@@ -83,12 +84,14 @@ class Star extends React.PureComponent<Props, State> {
     return value;
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: any) {
-    if (this.props.defaultValue !== nextProps.defaultValue) {
-      this.setState(() => ({
+  static getDerivedStateFromProps(nextProps: any, prevState: any) {
+    if (nextProps.defaultValue !== prevState.defaultValue) {
+      return {
+        defaultValue: nextProps.defaultValue,
         value: nextProps.defaultValue,
-      }));
+      };
     }
+    return null;
   }
 
   handleClick(value?: number) {
@@ -173,3 +176,11 @@ class Star extends React.PureComponent<Props, State> {
 }
 
 export default Star;
+
+// UNSAFE_componentWillReceiveProps(nextProps: any) {
+//   if (this.props.defaultValue !== nextProps.defaultValue) {
+//     this.setState(() => ({
+//       value: nextProps.defaultValue,
+//     }));
+//   }
+// }

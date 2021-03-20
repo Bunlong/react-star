@@ -32,6 +32,7 @@ class StarIcon extends React.PureComponent<Props, State> {
   state = {
     displayValue: this.props.value,
     interacting: false,
+    value: this.props.value,
   } as State;
 
   constructor(props: any) {
@@ -97,12 +98,11 @@ class StarIcon extends React.PureComponent<Props, State> {
     this.onMouseLeave();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: any) {
-    if (this.props.value !== nextProps.value) {
-      this.setState(() => ({
-        displayValue: nextProps.value,
-      }));
+  static getDerivedStateFromProps(nextProps: any, prevState: any) {
+    if (nextProps.value !== prevState.value) {
+      return { displayValue: nextProps.value, value: nextProps.value };
     }
+    return null;
   }
 
   componentDidUpdate(prevProps: any, prevState: any) {
@@ -200,3 +200,11 @@ class StarIcon extends React.PureComponent<Props, State> {
 }
 
 export default StarIcon;
+
+// UNSAFE_componentWillReceiveProps(nextProps: any) {
+//   if (this.props.value !== nextProps.value) {
+//     this.setState(() => ({
+//       displayValue: nextProps.value,
+//     }));
+//   }
+// }
