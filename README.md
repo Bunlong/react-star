@@ -66,6 +66,12 @@ export default App;
     <td>The default value. Use when the component is not controlled.</td>
   </tr>
   <tr>
+    <td>shape</td>
+    <td>'thin' | 'fat'</td>
+    <td>'thin'</td>
+    <td>The shape of the star.</td>
+  </tr>
+  <tr>
     <td>fraction</td>
     <td>number</td>
     <td>1</td>

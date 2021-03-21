@@ -16,7 +16,8 @@
     "reactjs",
     "react-star",
     "star",
-    "rating"
+    "rating",
+    "react-rating"
   ],
   "homepage": "https://github.com/Bunlong/react-star",
   "main": "dist/react-star.js",

@@ -1,7 +1,7 @@
 import React from 'react';
 import StarIcon from './StarIcon';
 import { calculateTotalIcons } from './utils';
-import { ThinStar } from './stars';
+import { ThinStar, FatStar } from './stars';
 import {
   DEFAULT_MIN,
   DEFAULT_MAX,
@@ -12,6 +12,7 @@ import {
   NO_OPERATION,
   DEFAULT_OTHER,
 } from './models';
+import { emptyIconStyle, iconStyle } from './styles';
 
 interface Props {
   id?: number;
@@ -36,6 +37,7 @@ interface Props {
   onHover: (index?: number, event?: any) => void;
   onClick: (index?: number, event?: any) => void;
   onChange: (index?: number, event?: any) => void;
+  shape: 'thin' | 'fat';
 }
 
 interface State {
@@ -50,15 +52,6 @@ class Star extends React.PureComponent<Props, State> {
     step: DEFAULT_STEP,
     readOnly: DEFAULT_READONLY,
     fraction: DEFAULT_FRACTION,
-    icon: <ThinStar style={{ fill: '#ffb400', stroke: '#ffb400' }} />,
-    emptyIcon: (
-      <ThinStar
-        style={{ fill: '#000000', stroke: '#000000', opacity: '26%' }}
-      />
-    ),
-    placeholderIcon: (
-      <ThinStar style={{ fill: '#ffb400', stroke: '#ffb400' }} />
-    ),
     quiet: DEFAULT_QUIET,
     onHover: NO_OPERATION,
     onClick: NO_OPERATION,
@@ -129,12 +122,45 @@ class Star extends React.PureComponent<Props, State> {
       : translatedValue;
   }
 
+  renderEmptyIcon() {
+    const { shape, emptyIcon } = this.props;
+    if (!emptyIcon) {
+      return shape === 'fat' ? (
+        <FatStar style={emptyIconStyle} />
+      ) : (
+        <ThinStar style={emptyIconStyle} />
+      );
+    }
+    return emptyIcon;
+  }
+
+  renderIcon() {
+    const { shape, icon } = this.props;
+    if (!icon) {
+      return shape === 'fat' ? (
+        <FatStar style={iconStyle} />
+      ) : (
+        <ThinStar style={iconStyle} />
+      );
+    }
+    return icon;
+  }
+
+  renderPlaceholderIcon() {
+    const { shape, placeholderIcon } = this.props;
+    if (!placeholderIcon) {
+      return shape === 'fat' ? (
+        <FatStar style={iconStyle} />
+      ) : (
+        <ThinStar style={iconStyle} />
+      );
+    }
+    return placeholderIcon;
+  }
+
   render() {
     const {
       step,
-      emptyIcon,
-      icon,
-      placeholderIcon,
       readOnly,
       quiet,
       fraction,
@@ -165,9 +191,9 @@ class Star extends React.PureComponent<Props, State> {
         readOnly={readOnly || DEFAULT_READONLY}
         quiet={quiet || DEFAULT_QUIET}
         fraction={fraction || DEFAULT_FRACTION}
-        emptyIcon={emptyIcon || ''}
-        icon={icon || ''}
-        placeholderIcon={placeholderIcon || ''}
+        emptyIcon={this.renderEmptyIcon()}
+        icon={this.renderIcon()}
+        placeholderIcon={this.renderPlaceholderIcon}
         onClick={this.handleClick}
         onHover={this.handleHover}
       />

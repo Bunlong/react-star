@@ -27,6 +27,7 @@ class App extends React.Component {
         <Star
           fraction={2}
           onChange={(rate) => console.log(rate)}
+          shape={'fat'}
           // emptyIcon={<SVGIcon href="#icon-star-empty" className="icon" />}
           // fullIcon={<SVGIcon1 href="#icon-star-full" className="icon" />}
         />
